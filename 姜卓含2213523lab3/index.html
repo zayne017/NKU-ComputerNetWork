@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURORA - 红色羁绊</title>
+    <style>
+        :root {
+            --shinichi-main: #5d8aa8;
+            --ran-main: #d67a99;
+            --text: #333;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f0f6ff 0%, #fff5f8 100%);
+            background-attachment: fixed;
+            font-family: "Optima", "Georgia", "Songti SC", serif;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.92);
+            box-shadow: 0 20px 60px rgba(162, 168, 211, 0.15);
+            border-radius: 20px;
+            padding: 60px;
+            position: relative;
+            border: 1px solid #fff;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .main-title {
+            margin: 0;
+            font-weight: normal;
+            text-transform: uppercase;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .title-big {
+            font-size: 3.5rem;
+            letter-spacing: 10px;
+            background: linear-gradient(to right, var(--shinichi-main), var(--ran-main));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .title-separator {
+            font-size: 3rem;
+            font-weight: 100;
+            color: #ccc;
+            margin-top: -5px;
+        }
+
+        .title-small {
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            color: #666;
+            font-family: "Georgia", serif;
+            text-transform: none;
+        }
+
+        .sub-title {
+            font-size: 1rem;
+            color: #777;
+            letter-spacing: 4px;
+            margin-top: 15px;
+            position: relative;
+            display: inline-block;
+            font-style: italic;
+        }
+
+        .sub-title::after, .sub-title::before {
+            content: "";
+            display: block;
+            width: 30px;
+            height: 1px;
+            background: linear-gradient(to right, #ccc, transparent);
+            position: absolute;
+            top: 50%;
+        }
+        .sub-title::before { left: -50px; transform: rotate(180deg); }
+        .sub-title::after { right: -50px; }
+
+        .cp-container {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-bottom: 80px;
+            flex-wrap: wrap;
+        }
+
+        .char-group {
+            width: 320px;
+            text-align: center;
+        }
+
+        .polaroid {
+            background: #fff;
+            padding: 10px 10px 50px 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            border-radius: 2px;
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            opacity: 1;
+        }
+
+        .char-group:hover .polaroid {
+            transform: scale(1.03) rotate(0deg) !important;
+            z-index: 10;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .tape {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            width: 90px;
+            height: 25px;
+            backdrop-filter: blur(2px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            z-index: 2;
+        }
+
+        .shinichi .tape { 
+            background-color: rgba(127, 158, 178, 0.4); 
+            transform: translateX(-50%) rotate(-3deg); 
+        }
+        
+        .ran .tape { 
+            background-color: rgba(214, 152, 168, 0.4); 
+            transform: translateX(-50%) rotate(3deg); 
+        }
+
+        .shinichi .polaroid { transform: rotate(-2deg); }
+        .ran .polaroid { transform: rotate(2deg); }
+
+        .name-tag {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-top: 25px;
+            display: inline-block;
+            padding-bottom: 8px;
+            font-family: "Times New Roman", serif;
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        .name-tag::after {
+            content: "•";
+            position: absolute;
+            bottom: -5px;
+            left: 0; right: 0;
+            text-align: center;
+            font-size: 20px;
+            line-height: 0;
+        }
+        .shinichi .name-tag { color: var(--shinichi-main); }
+        .shinichi .name-tag::after { color: #d0e1f0; }
+        .ran .name-tag { color: var(--ran-main); }
+        .ran .name-tag::after { color: #fcecef; }
+
+        .info-box {
+            margin-top: 15px;
+            text-align: left;
+            padding: 0 15px;
+        }
+
+        .info-item {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        
+        .info-item strong {
+            color: #333;
+            margin-right: 5px;
+            font-family: "Georgia", serif;
+        }
+
+        .quote-text {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #ddd;
+            font-style: italic;
+            text-align: center;
+        }
+
+        .gallery-wrap {
+            border-top: 1px solid #eee;
+            padding-top: 50px;
+        }
+
+        .gallery-title {
+            text-align: center;
+            color: #999;
+            letter-spacing: 6px;
+            margin-bottom: 40px;
+            font-size: 0.95rem;
+            font-weight: bold;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .photo-item {
+            background: #fff;
+            padding: 6px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .photo-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+
+        .footer {
+            margin-top: 70px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #444;
+            font-weight: 600;
+            letter-spacing: 1px;
+            padding-top: 20px;
+            border-top: 2px solid #f0f0f0;
+        }
+        
+        @media (max-width: 700px) {
+            body { padding: 15px; }
+            .container { padding: 30px 20px; }
+            .main-title { flex-direction: column; gap: 5px; }
+            .title-separator { display: none; }
+            .cp-container { gap: 40px; }
+            .photo-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header class="header">
+            <h1 class="main-title">
+                <span class="title-big">AURORA</span>
+                <span class="title-separator">|</span>
+                <span class="title-small">The Red Thread of Fate</span>
+            </h1>
+            <div class="sub-title">The Silver Bullet & The Angel</div>
+        </header>
+
+        <div class="cp-container">
+            
+            <div class="char-group shinichi">
+                <div class="polaroid">
+                    <div class="tape"></div>
+                    <img src="1.jpg" alt="Shinichi">
+                </div>
+                <div class="name-tag">Kudo Shinichi</div>
+                
+                <div class="info-box">
+                    <div class="info-item"><strong>Identity:</strong> High School Detective</div>
+                    <div class="info-item"><strong>Code Name:</strong> The Silver Bullet</div>
+                    <div class="quote-text">
+                        “因为我喜欢你，<br>比地球上的任何人都喜欢你。”
+                    </div>
+                </div>
+            </div>
+
+            <div class="char-group ran">
+                <div class="polaroid">
+                    <div class="tape"></div>
+                    <img src="2.jpg" alt="Ran">
+                </div>
+                <div class="name-tag">Mouri Ran</div>
+                
+                <div class="info-box">
+                    <div class="info-item"><strong>Identity:</strong> Karate Club Captain</div>
+                    <div class="info-item"><strong>Code Name:</strong> Angel</div>
+                    <div class="quote-text">
+                        “我并不讨厌等待，<br>因为等得越久，重逢的时候就会越幸福。”
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="gallery-wrap">
+            <div class="gallery-title">♥ SWEET MEMORIES ♥</div>
+            <div class="photo-grid">
+                <div class="photo-item"><img src="3.jpg" alt="Memory 1"></div>
+                <div class="photo-item"><img src="4.jpg" alt="Memory 2"></div>
+                <div class="photo-item"><img src="5.jpg" alt="Memory 3"></div>
+                <div class="photo-item"><img src="6.jpg" alt="Memory 4"></div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>NAME: 姜卓含 &nbsp;|&nbsp; ID: 2213523 &nbsp;|&nbsp; IoT Engineering</p>
+        </div>
+
+    </div>
+
+</body>
+</html>
